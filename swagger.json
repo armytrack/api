@@ -1,0 +1,1200 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Army Track API",
+    "termsOfService": "http://army-track.com/corp/api",
+    "contact": {
+      "email": "info.army007@gmail.com"
+    }
+  },
+  "host": "army-track.com",
+  "basePath": "/fire/api",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api-key",
+      "in": "header",
+      "description": "API Key adalah kata kunci rahasia yang diperlukan untuk mengakses API"
+    }
+  },
+  "security": [
+    {
+      "api_key": []
+    }
+  ],
+  "consumes": [
+        "application/json"
+  ],
+  "produces": [
+        "application/json"
+  ],
+  "paths": {
+    "/vehicle": {
+      "get": {
+        "summary": "menampilkan semua kendaraan",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/VehicleObject"
+            }
+          },
+          "404": {
+            "description": "No Vehicle Data"
+          }
+        }
+      },
+      "post": {
+        "summary": "menambah kendaraan baru",
+        "parameters": [
+          {
+            "$ref": "#/parameters/VehicleAddParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "deviceId": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Imei ini sudah terdaftar !"
+          }
+        }
+      },
+      "put": {
+        "summary": "mengedit data kendaraan",
+        "parameters": [
+          {
+            "$ref": "#/parameters/VehicleEditParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "deviceId": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/vehicle/{id}": {
+      "get": {
+        "summary": "menampilkan satu kendaraan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "device id kendaraan",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/VehicleObject"
+            }
+          },
+          "404": {
+            "description": "No Vehicle Data"
+          }
+        }
+      },
+      "delete": {
+        "summary": "menghapus data kendaraan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "device id kendaraan",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "deviceId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/geofence": {
+      "get": {
+        "summary": "menampilkan daftar geofence / POI (Point of Interest)",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GeofenceObject"
+            }
+          },
+          "404": {
+            "description": "No Geofence Data"
+          }
+        }
+      },
+      "post": {
+        "summary": "menambah lokasi geofence baru",
+        "parameters": [
+          {
+            "$ref": "#/parameters/GeofenceAddParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "mengedit lokasi geofence",
+        "parameters": [
+          {
+            "$ref": "#/parameters/GeofenceEditParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/geofence/{id}": {
+      "get": {
+        "summary": "menampilkan satu geofence / POI (Point of Interest)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id geofence",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GeofenceObject"
+            }
+          },
+          "404": {
+            "description": "No Geofence Data"
+          }
+        }
+      },
+      "delete": {
+        "summary": "menghapus data geofence",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id geofence yang ingin dihapus",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "deviceId": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/device_geofence": {
+      "post": {
+        "summary": "menambahkan device atau kendaraan pada list deteksi keluar masuk geofence",
+        "parameters": [
+          {
+            "$ref": "#/parameters/DeviceGeofenceParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      },
+      "delete": {
+        "summary": "menghapus device atau kendaraan dari list deteksi keluar masuk geofence",
+        "parameters": [
+          {
+            "$ref": "#/parameters/DeviceGeofenceParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/position": {
+      "get": {
+        "summary": "menampilkan posisi terakhir semua kendaraan",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PositionObject"
+            }
+          },
+          "404": {
+            "description": "No Position Data"
+          }
+        }
+      }
+    },
+    "/position/{id}": {
+      "get": {
+        "summary": "menampilkan posisi terakhir satu kendaraan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id device / kendaraan",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/PositionObject"
+            }
+          },
+          "404": {
+            "description": "No Position Data"
+          }
+        }
+      }
+    },
+    "/journey": {
+      "get": {
+        "summary": "menampilkan history perjalanan kendaraan",
+        "parameters": [
+          {
+            "$ref": "#/parameters/JourneyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/JourneyObject"
+            }
+          },
+          "404": {
+            "description": "No Position Data"
+          }
+        }
+      }
+    },
+    "/journey/{id}": {
+      "get": {
+        "summary": "menampilkan satu data posisi kendaraan pada waktu tertentu",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id posisi kendaraan",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/JourneyObject"
+            }
+          },
+          "404": {
+            "description": "No Position Data"
+          }
+        }
+      }
+    },
+    "/save_address": {
+      "post": {
+        "summary": "menyimpan alamat / nama jalan kedalam address data posisi kendaraan",
+        "parameters": [
+          {
+            "$ref": "#/parameters/AddressParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/notification": {
+      "get": {
+        "summary": "menampilkan notifikasi/warning/alert ketika terjadi suatu event misalnya kendaraan keluar masuk area geofence, alert low battery, alert engine on off, dsb",
+        "parameters": [
+          {
+            "$ref": "#/parameters/NotifyParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "fixtime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "deviceid": {
+                  "type": "integer"
+                },
+                "positionid": {
+                  "type": "integer"
+                },
+                "vehicle": {
+                  "type": "string"
+                },
+                "geofenceid": {
+                  "type": "integer"
+                },
+                "geofence_name": {
+                  "type": "string"
+                },
+                "alarm": {
+                  "type": "string"
+                },
+                "command_result": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    },
+    "/reminder": {
+      "get": {
+        "summary": "menampilkan reminder/pengingat terhadap kondisi habisnya masa berlaku STNK,KIR,Asuransi, waktu service kendaraan, waktu ganti aki",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "deviceid": {
+                  "type": "integer"
+                },
+                "vehicle": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "VehicleObject": {
+      "type": "object",
+      "description": "menampilkan data kendaraan",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "device id kendaraan"
+        },
+        "name": {
+          "type": "string",
+          "description": "nama pengenal kendaraan lengkap misalnya menggunakan no polisi seperti (B 1234 ABC) Innova Black"
+        },
+        "uniqueid": {
+          "type": "string",
+          "description": "no imei gps"
+        },
+        "gsm": {
+          "type": "number"
+        },
+        "jenis_kendaraan": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "integer"
+        },
+        "sensor_gembok": {
+          "type": "string",
+          "description": "jika ada sensor gembok nilainya 'y' jika tidak ada nilainya 'n'"
+        },
+        "equipment_type": {
+          "type": "string"
+        },
+        "sensor_bbm": {
+          "type": "string",
+          "description": "jika ada sensor bbmnya nilainya 'y' jika tidak ada nilainya 'n'"
+        },
+        "minimum_bbm": {
+          "type": "integer"
+        },
+        "maksimum_bbm": {
+          "type": "integer"
+        },
+        "sensor_suhu": {
+          "type": "string",
+          "description": "jika ada sensor suhunya nilainya 'y' jika tidak ada nilainya 'n'"
+        },
+        "tgl_pasang": {
+          "type": "string",
+          "format": "date",
+          "description": "format date yyyy-mm-dd"
+        },
+        "abodemen": {
+          "type": "string"
+        },
+        "hrg_abo": {
+          "type": "integer"
+        },
+        "notif_odo": {
+          "type": "string",
+          "description": "jika ada mengaktifkan notifikasi odometer nilainya 'y' jika tidak ada nilainya 'n'"
+        },
+        "notifodo_val": {
+          "type": "integer"
+        },
+        "last_service": {
+          "type": "string",
+          "description": "format datetime yyyy-mm-dd hh:ii:ss"
+        },
+        "masa_stnk": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "masa_asuransi": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "supir": {
+          "type": "string"
+        },
+        "ada_supir": {
+          "type": "string",
+          "description": "jika ada supirnya nilainya 'y' jika tidak ada nilainya 'n'"
+        },
+        "foto_supir": {
+          "type": "string"
+        },
+        "tgl_bayar_abo": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "jatuh_tempo": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "coret": {
+          "type": "string"
+        },
+        "sts_blokir": {
+          "type": "string",
+          "description": "jika kondisi sedang diblok maka statusnya 'y' jika tidak 'n'"
+        },
+        "akhir_ganti_aki": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "last_odo_service": {
+          "type": "integer"
+        },
+        "masa_kir": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "nopol2": {
+          "type": "string"
+        },
+        "nopol": {
+          "type": "string"
+        },
+        "type_kendaraan": {
+          "type": "string"
+        },
+        "warna": {
+          "type": "string"
+        },
+        "stnk": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "asuransi": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "tgl_service": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        }
+      }
+    },
+    "PositionObject": {
+      "type": "object",
+      "description": "menampilkan posisi terakhir semua kendaraan",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "deviceid": {
+          "type": "integer"
+        },
+        "servertime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "devicetime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "fixtime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "valid": {
+          "type": "integer"
+        },
+        "latitude": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "string"
+        },
+        "altitude": {
+          "type": "number"
+        },
+        "speed": {
+          "type": "number"
+        },
+        "course": {
+          "type": "number"
+        },
+        "address": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "id_kendaraan": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "lastupdate": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "time": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "gsm": {
+          "type": "number"
+        },
+        "jenis_kendaraan": {
+          "type": "string"
+        },
+        "device_id": {
+          "type": "integer"
+        },
+        "sensor_gembok": {
+          "type": "string"
+        },
+        "equipment_type": {
+          "type": "string"
+        },
+        "sensor_bbm": {
+          "type": "string"
+        },
+        "minimum_bbm": {
+          "type": "number"
+        },
+        "maksimum_bbm": {
+          "type": "number"
+        },
+        "sensor_suhu": {
+          "type": "string"
+        },
+        "tgl_pasang": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "abodemen": {
+          "type": "string"
+        },
+        "hrg_abo": {
+          "type": "integer"
+        },
+        "notif_odo": {
+          "type": "string"
+        },
+        "notifodo_val": {
+          "type": "integer"
+        },
+        "last_service": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "masa_stnk": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "masa_asuransi": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "supir": {
+          "type": "string"
+        },
+        "ada_supir": {
+          "type": "string"
+        },
+        "foto_supir": {
+          "type": "string"
+        },
+        "tgl_bayar_abo": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "jatuh_tempo": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "coret": {
+          "type": "string"
+        },
+        "sts_blokir": {
+          "type": "string"
+        },
+        "akhir_ganti_aki": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "last_odo_service": {
+          "type": "number"
+        },
+        "masa_kir": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd"
+        },
+        "format_fixtime": {
+          "type": "string",
+          "description": "format date d M Y H:i:s am/pm"
+        },
+        "nopol": {
+          "type": "string"
+        },
+        "jenisken": {
+          "type": "string"
+        },
+        "odometer": {
+          "type": "number"
+        },
+        "engine": {
+          "type": "string"
+        },
+        "sts_engine": {
+          "type": "string"
+        },
+        "ada_satelit": {
+          "type": "string"
+        },
+        "satelist": {
+          "type": "integer"
+        },
+        "bbm": {
+          "type": "number"
+        }
+      }
+    },
+    "JourneyObject": {
+      "type": "object",
+      "description": "menampilkan history perjalanan kendaraan",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "protocol": {
+          "type": "string"
+        },
+        "deviceid": {
+          "type": "integer"
+        },
+        "servertime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "devicetime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "fixtime": {
+          "type": "string",
+          "description": "format date yyyy-mm-dd hh:ii:ss"
+        },
+        "valid": {
+          "type": "integer"
+        },
+        "latitude": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "string"
+        },
+        "altitude": {
+          "type": "number"
+        },
+        "speed": {
+          "type": "number"
+        },
+        "course": {
+          "type": "number"
+        },
+        "address": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object"
+        },
+        "odo": {
+          "type": "number"
+        },
+        "engine": {
+          "type": "string"
+        },
+        "sts_engine": {
+          "type": "string"
+        },
+        "ada_satelit": {
+          "type": "string"
+        },
+        "satelit": {
+          "type": "integer"
+        }
+      }
+    },
+    "AddVehicleParameter": {
+      "type": "object",
+      "description": "field yang perlu diisi untuk menambah data kendaraan",
+      "properties": {
+        "imei": {
+          "type": "integer",
+          "description": "kode unik kendaraan / no seri/imei alat gps (wajib diisi)"
+        },
+        "name": {
+          "type": "string",
+          "description": "nama pengenal kendaraan misalnya menggunakan no polisi seperti (B 1234 ABC) Innova Black (wajib diisi)"
+        },
+        "gsm": {
+          "type": "string",
+          "description": "nomor gsm yang dipasang pada alat gps (wajib diisi)"
+        },
+        "jenis_kendaraan": {
+          "type": "string",
+          "description": "jenis kendaraan, pilihan (suv,bus,motor,sedan,taxi,trailer,travel,truk) (wajib diisi)"
+        },
+        "equipment_type": {
+          "type": "string",
+          "description": "jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll"
+        },
+        "notifodo_val": {
+          "type": "number",
+          "description": "interval kilometer odometer untuk reminder service berkala kendaraan"
+        },
+        "last_service": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Tanggal service terakhir format waktu yyyy-mm-dd hh:ii:ss"
+        },
+        "expired_stnk": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku STNK kendaraan format yyyy-mm-dd"
+        },
+        "expired_asuransi": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku asuransi kendaraan format yyyy-mm-dd"
+        },
+        "expired_kir": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku KIR kendaraan format yyyy-mm-dd"
+        },
+        "last_ganti_aki": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal terakhir Accu kendaraan diganti format yyyy-mm-dd"
+        },
+        "ada_supir": {
+          "type": "string",
+          "description": "apakah kendaraan ini ada supir khususnya, isinya y jika iya dan n jika tidak"
+        },
+        "supir": {
+          "type": "string",
+          "description": "Nama supir khusus yang bertugas mengemudikan kendaraan"
+        },
+        "foto_supir": {
+          "type": "string",
+          "description": "file foto berupa image dengan format JPG,PNG,GIF, atau BMP ukuran maximum 10MB, file image sebelumnya harus dikonversi menjadi format string dengan metode base64 encode"
+        }
+      }
+    },
+    "EditVehicleParameter": {
+      "type": "object",
+      "description": "field yang perlu diisi untuk mengedit data kendaraan",
+      "properties": {
+        "deviceId": {
+          "type": "integer",
+          "description": "id device kendaraan yang ingin diedit (wajib diisi)"
+        },
+        "imei": {
+          "type": "integer",
+          "description": "kode unik kendaraan / no seri/imei alat gps (wajib diisi)"
+        },
+        "name": {
+          "type": "string",
+          "description": "nama pengenal kendaraan misalnya menggunakan no polisi seperti (B 1234 ABC) Innova Black (wajib diisi)"
+        },
+        "gsm": {
+          "type": "string",
+          "description": "nomor gsm yang dipasang pada alat gps (wajib diisi)"
+        },
+        "jenis_kendaraan": {
+          "type": "string",
+          "description": "jenis kendaraan, pilihan (suv,bus,motor,sedan,taxi,trailer,travel,truk) (wajib diisi)"
+        },
+        "equipment_type": {
+          "type": "string",
+          "description": "jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll"
+        },
+        "notifodo_val": {
+          "type": "number",
+          "description": "interval kilometer odometer untuk reminder service berkala kendaraan"
+        },
+        "last_service": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Tanggal service terakhir format waktu yyyy-mm-dd hh:ii:ss"
+        },
+        "expired_stnk": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku STNK kendaraan format yyyy-mm-dd"
+        },
+        "expired_asuransi": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku asuransi kendaraan format yyyy-mm-dd"
+        },
+        "expired_kir": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal kadaluarsa masa berlaku KIR kendaraan format yyyy-mm-dd"
+        },
+        "last_ganti_aki": {
+          "type": "string",
+          "format": "date",
+          "description": "Tanggal terakhir Accu kendaraan diganti format yyyy-mm-dd"
+        },
+        "ada_supir": {
+          "type": "string",
+          "description": "apakah kendaraan ini ada supir khususnya, isinya y jika iya dan n jika tidak"
+        },
+        "supir": {
+          "type": "string",
+          "description": "Nama supir khusus yang bertugas mengemudikan kendaraan"
+        },
+        "foto_supir": {
+          "type": "string",
+          "description": "file foto berupa image dengan format JPG,PNG,GIF, atau BMP ukuran maximum 10MB, file image sebelumnya harus dikonversi menjadi format string dengan metode base64 encode"
+        }
+      }
+    },
+    "GeofenceObject": {
+      "type": "object",
+      "description": "menampilkan data geofence",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "id geofence"
+        },
+        "name": {
+          "type": "string",
+          "description": "nama geofence"
+        },
+        "description": {
+          "type": "string",
+          "description": "penjelasan tentang geofence"
+        },
+        "area": {
+          "type": "string",
+          "description": "kumpulan koordinat geofence"
+        },
+        "attributes": {
+          "type": "object",
+          "description": "data pelengkap geofence"
+        }
+      }
+    }
+  },
+  "parameters": {
+    "VehicleAddParam": {
+      "name": "body",
+      "in": "body",
+      "description": "imei => kode unik kendaraan / no seri/imei alat gps (wajib diisi) \n \n name => nama pengenal kendaraan misalnya menggunakan no polisi seperti (B 1234 ABC) Innova Black (wajib diisi) \n \n gsm => nomor gsm yang dipasang pada alat gps (wajib diisi) \n \n jenis_kendaraan => jenis kendaraan, pilihan (suv,bus,motor,sedan,taxi,trailer,travel,truk) (wajib diisi) \n \n equipment_type => jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll \n \n notifodo_val => interval kilometer odometer untuk reminder service berkala kendaraan \n \n last_service => Tanggal service terakhir format waktu yyyy-mm-dd hh:ii:ss \n \n expired_stnk => Tanggal kadaluarsa masa berlaku STNK kendaraan format yyyy-mm-dd \n \n expired_asuransi => Tanggal kadaluarsa masa berlaku asuransi kendaraan format yyyy-mm-dd \n \n expired_kir => Tanggal kadaluarsa masa berlaku KIR kendaraan format yyyy-mm-dd \n \n last_ganti_aki => Tanggal terakhir Accu kendaraan diganti format yyyy-mm-dd \n \n ada_supir => apakah kendaraan ini ada supir khususnya, isinya y jika iya dan n jika tidak \n \n supir => Nama supir khusus yang bertugas mengemudikan kendaraan \n \n foto_supir => file foto berupa image dengan format JPG,PNG,GIF, atau BMP ukuran maximum 10MB, file image sebelumnya harus dikonversi menjadi format string dengan metode base64 encode",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/AddVehicleParameter"
+      }
+    },
+    "VehicleEditParam": {
+      "name": "body",
+      "in": "body",
+      "description": "deviceId => id device kendaraan yang ingin diedit (wajib diisi)\n \n imei => kode unik kendaraan / no seri/imei alat gps (wajib diisi) \n \n name => nama pengenal kendaraan misalnya menggunakan no polisi seperti (B 1234 ABC) Innova Black (wajib diisi) \n \n gsm => nomor gsm yang dipasang pada alat gps (wajib diisi) \n \n jenis_kendaraan => jenis kendaraan, pilihan (suv,bus,motor,sedan,taxi,trailer,travel,truk) (wajib diisi) \n \n equipment_type => jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll \n \n notifodo_val => interval kilometer odometer untuk reminder service berkala kendaraan \n \n last_service => Tanggal service terakhir format waktu yyyy-mm-dd hh:ii:ss \n \n expired_stnk => Tanggal kadaluarsa masa berlaku STNK kendaraan format yyyy-mm-dd \n \n expired_asuransi => Tanggal kadaluarsa masa berlaku asuransi kendaraan format yyyy-mm-dd \n \n expired_kir => Tanggal kadaluarsa masa berlaku KIR kendaraan format yyyy-mm-dd \n \n last_ganti_aki => Tanggal terakhir Accu kendaraan diganti format yyyy-mm-dd \n \n ada_supir => apakah kendaraan ini ada supir khususnya, isinya y jika iya dan n jika tidak \n \n supir => Nama supir khusus yang bertugas mengemudikan kendaraan \n \n foto_supir => file foto berupa image dengan format JPG,PNG,GIF, atau BMP ukuran maximum 10MB, file image sebelumnya harus dikonversi menjadi format string dengan metode base64 encode",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/EditVehicleParameter"
+      }
+    },
+    "GeofenceAddParam": {
+      "name": "body",
+      "in": "body",
+      "description": "name => nama geofence (wajib diisi) \n \n description => penjelasan tentang geofence (wajib diisi) \n \n area => kumpulan koordinat geofence (wajib diisi), ada 2 format geofence yaitu : \n \n 1. Circle / lingkaran, format area => CIRCLE (latitude longitude, radius) \n \n 2. Polygon / segi banyak (segi 3, segi 4, segi 5, dst), contoh segi 3 format area =>  POLYGON((latitude longitude, latitude longitude, latitude longitude, latitude longitude))",
+      "required": true,
+      "schema": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GeofenceEditParam": {
+      "name": "body",
+      "in": "body",
+      "description": "id => id geofence yang ingin diedit (wajib diisi) \n\n name => nama geofence (wajib diisi) \n \n description => penjelasan tentang geofence (wajib diisi) \n \n area => kumpulan koordinat geofence (wajib diisi), ada 2 format geofence yaitu : \n \n 1. Circle / lingkaran, format area => CIRCLE (latitude longitude, radius) \n \n 2. Polygon / segi banyak (segi 3, segi 4, segi 5, dst), contoh segi 3 format area =>  POLYGON((latitude longitude, latitude longitude, latitude longitude, latitude longitude))",
+      "required": true,
+      "schema": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "area": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "DeviceGeofenceParam": {
+      "name": "body",
+      "in": "body",
+      "description": "deviceId => id device / kendaraan (wajib diisi) \n\n geofenceId => id geofence (wajib diisi)",
+      "required": true,
+      "schema": {
+        "properties": {
+          "deviceId": {
+            "type": "integer"
+          },
+          "geofenceId": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "AddressParam": {
+      "name": "body",
+      "in": "body",
+      "description": "positionId => id posisi kendaraan yang ingin diisi alamat (wajib diisi) \n \n deviceId => id device/kendaraan (wajib diisi) \n \n address => alamat / nama jalan (wajib diisi)",
+      "required": true,
+      "schema": {
+        "properties": {
+          "positionId": {
+            "type": "integer"
+          },
+          "deviceId": {
+            "type": "integer"
+          },
+          "address": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NotifyParam": {
+      "name": "body",
+      "in": "body",
+      "description": "begin => periode awal format date yyyy-mm-dd hh:ii:ss (jika tidak diisi maka nilainya tanggal sekarang jam 00:00:00) \n \n end => periode akhir format date yyyy-mm-dd hh:ii:ss (jika tidak diisi maka nilainya tanggal sekarang jam 23:59:59)",
+      "required": false,
+      "schema": {
+        "properties": {
+          "begin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "JourneyParam": {
+      "name": "body",
+      "in": "body",
+      "description": "deviceid => id device /kendaraan (wajib diisi) \n \n begin => periode awal format date yyyy-mm-dd hh:ii:ss (jika tidak diisi maka nilainya tanggal sekarang jam 00:00:00) \n \n end => periode akhir format date yyyy-mm-dd hh:ii:ss (jika tidak diisi maka nilainya tanggal sekarang jam 23:59:59)",
+      "required": true,
+      "schema": {
+        "properties": {
+          "deviceid": {
+            "type": "integer"
+          },
+          "begin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
