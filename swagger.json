@@ -919,7 +919,7 @@
         },
         "equipment_type": {
           "type": "string",
-          "description": "jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll"
+          "description": "jenis alat gps yang digunakan misalnya GT06,ET02,TR06,dll"
         },
         "notifodo_val": {
           "type": "number",
@@ -990,7 +990,7 @@
         },
         "equipment_type": {
           "type": "string",
-          "description": "jenis alat gps yang digunakan misalnya GT02,ET02,TR06,dll"
+          "description": "jenis alat gps yang digunakan misalnya GT06,ET02,TR06,dll"
         },
         "notifodo_val": {
           "type": "number",
